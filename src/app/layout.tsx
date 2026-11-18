@@ -23,32 +23,40 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Sina Rostamabadi — Full Stack Developer",
   description:
-    "Full Stack Developer specializing in React, Next.js and NestJS. Production web and mobile products — accounting, POS and payment platforms.",
-  keywords: [
-    "Sina Rostamabadi",
-    "Full Stack Developer",
-    "React",
-    "Next.js",
-    "NestJS",
-    "TypeScript",
-  ],
+    "Immersive dual-theme portfolio of Sina Rostamabadi — Full Stack Developer specializing in React, Next.js and NestJS.",
+  keywords: ["Sina Rostamabadi", "Full Stack Developer", "React", "Next.js", "NestJS", "Three.js"],
   authors: [{ name: "Sina Rostamabadi" }],
   openGraph: {
     title: "Sina Rostamabadi — Full Stack Developer",
-    description:
-      "Building scalable web and mobile products end-to-end with React, Next.js and NestJS.",
+    description: "Production systems end to end — React, Next.js and NestJS.",
     type: "website",
-    locale: "en_US",
   },
 };
+
+const themeInitScript = `(() => {
+  try {
+    const stored = localStorage.getItem("sina-3d-theme");
+    const theme = stored === "light" || stored === "dark" ? stored : "dark";
+    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.style.colorScheme = theme;
+  } catch (_) {
+    document.documentElement.setAttribute("data-theme", "dark");
+    document.documentElement.style.colorScheme = "dark";
+  }
+})();`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      data-theme="dark"
       className={`${manrope.variable} ${syne.variable} ${jetbrains.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="flex min-h-full flex-col bg-soft font-sans text-ink">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body className="relative flex min-h-full flex-col bg-void font-sans text-ink">
         <div className="grain" aria-hidden />
         {children}
       </body>
